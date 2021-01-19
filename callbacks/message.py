@@ -3,7 +3,8 @@ from config import channel_id
 from manifest import manifest
 
 def send_to_channel(update, context):
-    # print(update.message.from_user)
+    # print(update.message)
+    if not update.message: return 
     if not update.message.from_user.id == 777000:
         context.bot.copy_message(
             chat_id = f'@{channel_id}',

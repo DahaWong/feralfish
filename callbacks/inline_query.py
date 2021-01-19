@@ -1,9 +1,7 @@
-# from utils.api_method import search
 # from telegram import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, constants
 # from manifest import manifest
-# import re, datetime
-# from components import PodcastPage
 # from uuid import uuid4
+# import re
 
 # def handle_inline_query(update, context):
 #     query = update.inline_query
