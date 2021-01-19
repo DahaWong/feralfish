@@ -20,7 +20,7 @@ dev_user_id = config['DEV']['ID']
 
 # Channel
 channel_id = config['CHANNEL']['ID']
-
+channel_owner_id = config['CHANNEL']['OWNER_ID']
 
 # Build
 update_info = {
