@@ -27,6 +27,9 @@ update_info = {
    'token': bot_token,
    'use_context': True,
 #    'base_url': bot_api,
+   'request_kwargs': {
+      'proxy_url':proxy
+    },
    'defaults': defaults,
    'workers': 16
  }

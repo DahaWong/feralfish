@@ -1,4 +1,4 @@
-from config import update_info, webhook_info, webhook_setting
+from config import update_info
 from telegram.ext import Updater
 from handlers.register import register
 
