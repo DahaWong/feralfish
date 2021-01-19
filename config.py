@@ -1,5 +1,5 @@
 import configparser
-from utils.persistence import persistence
+# from utils.persistence import persistence
 from telegram.ext import Defaults
 
 config = configparser.ConfigParser()
@@ -26,8 +26,7 @@ channel_id = config['CHANNEL']['ID']
 update_info = {
    'token': bot_token,
    'use_context': True,
-   'persistence': persistence,
-   'base_url': bot_api,
+#    'base_url': bot_api,
    'defaults': defaults,
    'workers': 16
  }
