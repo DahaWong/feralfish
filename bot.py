@@ -12,18 +12,11 @@ dispatcher = updater.dispatcher
 # updater.bot.delete_webhook() 
 # updater.bot.close()
 
-if not dispatcher.bot_data:
-    updater.dispatcher.bot_data.update({"podcasts":{}})
-
-for podcast in dispatcher.bot_data['podcasts'].values():
-    podcast.set_jobqueue(updater.job_queue)
+# if not dispatcher.bot_data:
+#     updater.dispatcher.bot_data.update({"podcasts":{}})
 
 register(updater.dispatcher)
 
 # Polling:
 updater.start_polling()
 updater.idle()
-
-# Webhook:
-# updater.start_webhook(**webhook_info)
-# updater.bot.set_webhook(**webhook_setting)

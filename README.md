@@ -1,4 +1,4 @@
-# Castpod
+# Feral Fish
 
 > v0.0.1
 

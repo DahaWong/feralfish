@@ -94,16 +94,6 @@ def manage(update, context):
     )
     update.message.delete()
 
-def settings(update, context):
-    if not check_login(update, context): return
-    keyboard = [["播客更新频率", "快捷置顶单集", "单集信息显示"],
-                ["播客搜索范围", "快捷置顶播客", "单集排序方式"],
-                ["退出偏好设置"]]
-    message = update.message.reply_text(
-        f'请选择需调整的偏好设置',
-        reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
-    )
-
 def help(update, context):
     if not check_login(update, context): return
     command_message_id = update.message.message_id

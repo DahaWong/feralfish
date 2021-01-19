@@ -7,11 +7,8 @@ config.read('config.ini')
 
 
 # Bot
-bot_token_test = config['BOT']['TOKEN_TEST']
 bot_token = config['BOT']['TOKEN']
 proxy = config['BOT']['PROXY']
-bot_api = config['BOT']['API']
-podcast_vault = config['BOT']['PODCAST_VAULT']
 defaults = Defaults(
     parse_mode="MARKDOWN", 
     disable_notification=True, 
@@ -19,10 +16,10 @@ defaults = Defaults(
 )
 
 # Dev
-dev_user_id = config['DEV']['USER_ID']
+dev_user_id = config['DEV']['ID']
 
-# Server
-webhook_port = int(config['WEBHOOK']['PORT'])
+# Channel
+channel_id = config['CHANNEL']['ID']
 
 
 # Build
@@ -32,30 +29,5 @@ update_info = {
    'persistence': persistence,
    'base_url': bot_api,
    'defaults': defaults,
-   'workers': 1024
+   'workers': 16
  }
-
-webhook_info = {
-    "listen": '127.0.0.1', 
-    "port": webhook_port, 
-    "url_path": bot_token
-}
-
-webhook_setting = {
-    "url": f'http://webhook.daha.me/{bot_token}',
-    "max_connections": 1000,
-    "drop_pending_updates": True
-    # "allowed_updates": []
-}
-
-# Test
-# update_info = {
-#    'token': bot_token,
-#    'use_context': True,
-#    'request_kwargs': {
-#       'proxy_url':proxy
-#     },
-#    'persistence': persistence,
-#    'base_url': bot_api,
-#    'defaults': defaults
-#  }
