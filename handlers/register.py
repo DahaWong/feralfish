@@ -7,8 +7,8 @@ from callbacks.error import handle_error
 handlers = []
 handlers.extend(command)
 handlers.extend(message)
-handlers.extend(inline_query)
-handlers.extend(callback_query)
+# handlers.extend(inline_query)
+# handlers.extend(callback_query)
 
 def register(dispatcher):
     for handler in handlers:
