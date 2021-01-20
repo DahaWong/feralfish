@@ -23,12 +23,14 @@ def about(update, context):
 
 
 def share(update, context, share_type='分享发现'):
-    replied_message = update.message.reply_to_message
+    message = update.message
+    replied_message = message.reply_to_message
     if not replied_message:
+        message.reply_text('推荐的内容不能为空 :)')
         return
     context.bot.send_message(
         chat_id=f'@{channel_id}',
-        text=f"#{share_type} {replied_message}"
+        text=f"#{share_type} {replied_message.text}"
     )
 
 
