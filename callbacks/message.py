@@ -1,11 +1,11 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove, ReplyKeyboardMarkup, ChatAction, ParseMode
 from config import channel_id, channel_owner_id
-from manifest import manifest
+
 
 def send_to_channel(update, context):
     # print(update.message)
     message = update.message
-    if not message: return
+    if not message:
+        return
 
     admins = message.chat.get_administrators()
     if admins and (int(channel_owner_id) not in map(lambda x: x.user.id, admins)):
@@ -13,4 +13,4 @@ def send_to_channel(update, context):
         return
 
     if not message.from_user.id == 777000:
-        message.copy(chat_id = f'@{channel_id}')
+        message.copy(chat_id=f'@{channel_id}')
