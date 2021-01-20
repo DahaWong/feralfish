@@ -28,20 +28,19 @@ def share(update, context, share_type='分享发现'):
     if not replied_message:
         message.reply_text('推荐的内容不能为空 :)')
         return
-    # print(replied_message)
     new_message = replied_message.copy(chat_id = f'@{channel_id}')
     bot = context.bot
     if replied_message.text:
         bot.edit_message_text(
             chat_id = f'@{channel_id}', 
             message_id = new_message.message_id,
-            text = f'#{share_type} {replied_message.text}'
+            text = f'#{share_type} {replied_message.text_markdown_v2_urled}'
         )
     elif replied_message.caption:
         bot.edit_message_caption(
             chat_id = f'@{channel_id}', 
             message_id = new_message.message_id,
-            caption = f'{replied_message.caption}\n\n#{share_type}'
+            caption = f'{replied_message.caption_markdown_v2_urled}\n\n#{share_type}'
         )
 
 
@@ -52,7 +51,7 @@ def yeyu(update, context):
 def help(update, context):
     update.message.reply_text(
         text=(
-            f"*{manifest.name}使用说明书*\n"
+            f"*{manifest.name}使用说明书*\n\n"
             "/about: 关于本机器人\n"
         )
     )
