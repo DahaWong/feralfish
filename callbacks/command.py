@@ -28,19 +28,20 @@ def share(update, context, share_type='分享发现'):
     if not replied_message:
         message.reply_text('推荐的内容不能为空 :)')
         return
-    new_message = replied_message.copy(chat_id = f'@{channel_id}')
+    new_message = replied_message.copy(chat_id=f'@{channel_id}')
     bot = context.bot
+    back_slash = '\\'
     if replied_message.text:
         bot.edit_message_text(
-            chat_id = f'@{channel_id}', 
-            message_id = new_message.message_id,
-            text = f'#{share_type} {replied_message.text_markdown_v2_urled}'
+            chat_id=f'@{channel_id}',
+            message_id=new_message.message_id,
+            text=f"#{share_type} {replied_message.text_markdown_v2_urled.replace(back_slash,'')}"
         )
     elif replied_message.caption:
         bot.edit_message_caption(
-            chat_id = f'@{channel_id}', 
-            message_id = new_message.message_id,
-            caption = f'{replied_message.caption_markdown_v2_urled}\n\n#{share_type}'
+            chat_id=f'@{channel_id}',
+            message_id=new_message.message_id,
+            caption=f"{replied_message.caption_markdown_v2_urled.replace(back_slash,'')}\n\n#{share_type}"
         )
 
 

@@ -1,7 +1,7 @@
 from config import channel_id, channel_owner_id
+from telegram import ParseMode
 
-
-def send_to_channel(update, context):
+def send_to_channel(update, _):
     # print(update.message)
     message = update.message
     if not message:
@@ -13,4 +13,4 @@ def send_to_channel(update, context):
         return
 
     if not message.from_user.id == 777000:
-        message.copy(chat_id=f'@{channel_id}')
+        message.forward(chat_id=f'@{channel_id}')

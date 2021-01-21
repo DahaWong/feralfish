@@ -10,8 +10,8 @@ config.read('config.ini')
 bot_token = config['BOT']['TOKEN']
 proxy = config['BOT']['PROXY']
 defaults = Defaults(
-    parse_mode="MARKDOWN", 
-    disable_notification=True, 
+    parse_mode="MARKDOWN",
+    disable_notification=True,
     run_async=True
 )
 
@@ -24,12 +24,12 @@ channel_owner_id = config['CHANNEL']['OWNER_ID']
 
 # Build
 update_info = {
-   'token': bot_token,
-   'use_context': True,
-#    'base_url': bot_api,
-   'request_kwargs': {
-      'proxy_url':proxy
+    'token': bot_token,
+    'use_context': True,
+    #    'base_url': bot_api,
+    'request_kwargs': {
+        'proxy_url': proxy
     },
-   'defaults': defaults,
-   'workers': 16
- }
+    'defaults': defaults,
+    'workers': 16
+}
