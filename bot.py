@@ -1,8 +1,44 @@
+from telegram.ext import Defaults
+import configparser
 import sys
 import traceback
-from config import channel_id, update_info, dev_user_id, channel_owner_id, manifest
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+# Config
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+bot_token = config['BOT']['TOKEN']
+proxy = config['BOT']['PROXY']
+defaults = Defaults(
+    parse_mode="MARKDOWN",
+    disable_notification=True
+)
+dev_user_id = config['DEV']['ID']
+channel_id = config['CHANNEL']['ID']
+channel_owner_id = config['CHANNEL']['OWNER_ID']
+update_info = {
+    'token': bot_token,
+    'use_context': True,
+    #    'base_url': bot_api,
+    # 'request_kwargs': {
+    #     'proxy_url': proxy
+    # },
+    'defaults': defaults
+}
+
+
+class manifest:
+    name = "野鱼"
+    bot_id = "FeralFishBot"
+    author = "Daha"
+    author_id = 'dahawong'
+    author_url = "https://office.daha.me/"
+    version = "0.0.2"
+    discription = ""
+    repo = "https://github.com/dahawong/feralfish"
+
 
 updater = Updater(**update_info)
 dispatcher = updater.dispatcher
@@ -31,7 +67,7 @@ def about(update, context):
         text=(
             f"*{manifest.name}*  "
             f"`{manifest.version}`"
-            f"\n_by_ [{manifest.author}](https://t.me/{manifest.author_id})\n"
+            f"\nby [{manifest.author}](https://t.me/{manifest.author_id})\n"
         ),
         reply_markup=markup
     )
