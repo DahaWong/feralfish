@@ -1,5 +1,4 @@
 import configparser
-# from utils.persistence import persistence
 from telegram.ext import Defaults
 
 config = configparser.ConfigParser()
@@ -11,8 +10,7 @@ bot_token = config['BOT']['TOKEN']
 proxy = config['BOT']['PROXY']
 defaults = Defaults(
     parse_mode="MARKDOWN",
-    disable_notification=True,
-    run_async=True
+    disable_notification=True
 )
 
 # Dev
@@ -27,9 +25,21 @@ update_info = {
     'token': bot_token,
     'use_context': True,
     #    'base_url': bot_api,
-    'request_kwargs': {
-        'proxy_url': proxy
-    },
-    'defaults': defaults,
-    'workers': 16
+    # 'request_kwargs': {
+    #     'proxy_url': proxy
+    # },
+    'defaults': defaults
 }
+
+# Manifest
+
+
+class manifest:
+    name = "野鱼"
+    bot_id = "FeralFishBot"
+    author = "Daha"
+    author_id = 'dahawong'
+    author_url = "https://office.daha.me/"
+    version = "0.0.1"
+    discription = ""
+    repo = "https://github.com/dahawong/feralfish"
