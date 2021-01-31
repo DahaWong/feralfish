@@ -3,6 +3,7 @@ import sys
 import traceback
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Defaults
+from functools import wraps
 
 # Config
 
@@ -41,6 +42,18 @@ dispatcher = updater.dispatcher
 # updater.bot.log_out()
 
 
+def validate(func):
+    @wraps(func)
+    def wrapped(update, context, *args, **kwargs):
+        message = update.message
+        admins = message.chat.get_administrators()
+        if admins and (int(channel_owner_id) not in map(lambda x: x.user.id, admins)):
+            message.reply_text('当前群聊还不是一个业余公司！')
+            return
+        return func(update, context, *args, **kwargs)
+    return wrapped
+
+
 # Commands:
 
 
@@ -62,7 +75,7 @@ def about(update, context):
         reply_markup=markup
     )
 
-
+@validate
 def share(update, context, share_type='分享发现'):
     message = update.message
     replied_message = message.reply_to_message
@@ -85,7 +98,7 @@ def share(update, context, share_type='分享发现'):
             caption=f"{replied_message.caption_markdown_v2_urled.replace(back_slash,'')}\n\n#{share_type}"
         )
 
-
+@validate
 def yeyu(update, context):
     share(update, context, share_type='野鱼屏幕')
 
@@ -101,20 +114,12 @@ def help(update, context):
 
 # Handle Message
 
-
-def send_to_channel(update, _):
-    # print(update.message)
+@validate
+def send_to_channel(update, context):
     message = update.message
-    if not message:
+    if not (message and message.from_user.id == 777000):
         return
-
-    admins = message.chat.get_administrators()
-    if admins and (int(channel_owner_id) not in map(lambda x: x.user.id, admins)):
-        message.reply_text('当前群聊还不是一个业余公司！')
-        return
-
-    if not message.from_user.id == 777000:
-        message.forward(chat_id=f'@{channel_id}')
+    message.forward(chat_id=f'@{channel_id}')
 
 
 # Handle Error
