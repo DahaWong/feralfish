@@ -37,14 +37,9 @@ class manifest:
 
 updater = Updater(**update_info)
 dispatcher = updater.dispatcher
-
-
 # Use this method to logout your bot from telegram api cloud:
 # updater.bot.log_out()
 
-# Polling:
-updater.start_polling()
-updater.idle()
 
 # Commands:
 
@@ -162,3 +157,7 @@ handlers = command_handlers.extend(message_handlers)
 
 for handler in command_handlers:
     dispatcher.add_handler(handler)
+
+# Polling:
+updater.start_polling()
+updater.idle()
