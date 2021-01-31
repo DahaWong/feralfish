@@ -1,9 +1,8 @@
-from telegram.ext import Defaults
 import configparser
 import sys
 import traceback
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Defaults
 
 # Config
 
@@ -21,10 +20,6 @@ channel_owner_id = config['CHANNEL']['OWNER_ID']
 update_info = {
     'token': bot_token,
     'use_context': True,
-    #    'base_url': bot_api,
-    # 'request_kwargs': {
-    #     'proxy_url': proxy
-    # },
     'defaults': defaults
 }
 
