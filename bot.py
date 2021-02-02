@@ -10,7 +10,7 @@ from functools import wraps
 config = configparser.ConfigParser()
 config.read('config.ini')
 bot_token = config['BOT']['TOKEN']
-proxy = config['BOT']['PROXY']
+proxies = config['PROXIES']
 defaults = Defaults(
     parse_mode="MARKDOWN",
     disable_notification=True
@@ -85,8 +85,9 @@ def about(update, context):
     )
 
 @dev
-def proxy(update, context):
-    buttons = [InlineKeyboardButton(text='{manifest.name}专线 A', url='tg://proxy?server=136.244.105.159&port=228&secret=4303823b83f7d2185a61ec869d6c631e')]
+def show_proxy(update, context):
+    update.message.pin()
+    buttons = [InlineKeyboardButton(text=f'{manifest.name}专线 {i}', url=proxy) for i, proxy in enumerate(proxies)]
     update.message.reply_text(
         text='点击按钮以乘坐专线通往互联网彼岸',
         reply_markup = InlineKeyboardMarkup.from_column(buttons)
@@ -171,6 +172,7 @@ command_handlers = [
     CommandHandler('help', help),
     CommandHandler('share', share),
     CommandHandler('yeyu', yeyu),
+    CommandHandler('proxy', show_proxy)
 ]
 message_handlers = [MessageHandler(
     Filters.regex(r'#(?:上电视|野鱼屏幕|分享发现)'), send_to_channel)]
