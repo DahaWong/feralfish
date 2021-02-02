@@ -57,7 +57,7 @@ def club(func):
 def dev(func):
     @wraps(func)
     def wrapped(update, context, *args, **kwargs):
-        if update.message.from_user.user_id not in [dev_user_id, channel_owner]:
+        if update.message.from_user.id not in [dev_user_id, channel_owner]:
             update.message.reply_text(f'您没有{manifest.name}专线的获取权 :)')
             return
         return func(update, context, *args, **kwargs)
