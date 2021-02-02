@@ -90,7 +90,7 @@ def about(update, context):
 def show_proxy(update, context):
     update.message.pin()
     buttons = [InlineKeyboardButton(
-        text=f'{manifest.name}专线 {i}', url=proxy) for i, proxy in enumerate(proxies)]
+        text=f'{manifest.name}专线 {i}', url=proxy) for i, proxy in enumerate(proxies.values())]
     update.message.reply_text(
         text='点击按钮以乘坐专线通往互联网彼岸',
         reply_markup=InlineKeyboardMarkup.from_column(buttons)
