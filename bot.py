@@ -15,9 +15,9 @@ defaults = Defaults(
     parse_mode="MARKDOWN",
     disable_notification=True
 )
-dev_user_id = config['DEV']['ID']
+dev_user_id = int(config['DEV']['ID']) #daha
+channel_owner = int(config['CHANNEL']['OWNER']) #bob
 channel_id = config['CHANNEL']['ID']
-channel_owner_id = config['CHANNEL']['OWNER_ID']
 update_info = {
     'token': bot_token,
     'use_context': True,
@@ -27,6 +27,7 @@ update_info = {
 
 class manifest:
     name = "野鱼"
+    channel_name = "野鱼日报"
     bot_id = "FeralFishBot"
     author = "Daha"
     author_id = 'dahawong'
@@ -42,24 +43,32 @@ dispatcher = updater.dispatcher
 # updater.bot.log_out()
 
 
-def validate(func):
+def club(func):
     @wraps(func)
     def wrapped(update, context, *args, **kwargs):
         message = update.message
         admins = message.chat.get_administrators()
-        if admins and (int(channel_owner_id) not in map(lambda x: x.user.id, admins)):
+        if admins and (channel_owner not in map(lambda x: x.user.id, admins)):
             message.reply_text('当前群聊还不是一个业余公司！')
             return
         return func(update, context, *args, **kwargs)
     return wrapped
 
+def dev(func):
+    @wraps(func)
+    def wrapped(update, context, *args, **kwargs):
+        if update.message.from_user.user_id not in [dev_user_id, channel_owner]:
+            update.message.reply_text(f'您没有{manifest.name}专线的获取权 :)')
+            return
+        return func(update, context, *args, **kwargs)
+    return wrapped
 
 # Commands:
 
 
 def start(update, context):
     update.message.reply_text(
-        f"你好，我是野鱼！[野鱼日报](https://t.me/{channel_id})的管理员。")
+        f"你好，我是{manifest.name}！[{manifest.channel_name}](https://t.me/{channel_id})的管理员。")
 
 
 def about(update, context):
@@ -75,7 +84,15 @@ def about(update, context):
         reply_markup=markup
     )
 
-@validate
+@dev
+def proxy(update, context):
+    buttons = [InlineKeyboardButton(text='{manifest.name}专线 A', url='tg://proxy?server=136.244.105.159&port=228&secret=4303823b83f7d2185a61ec869d6c631e')]
+    update.message.reply_text(
+        text='点击按钮以乘坐专线通往互联网彼岸',
+        reply_markup = InlineKeyboardMarkup.from_column(buttons)
+    )
+
+@club
 def share(update, context, share_type='分享发现'):
     message = update.message
     replied_message = message.reply_to_message
@@ -98,10 +115,9 @@ def share(update, context, share_type='分享发现'):
             caption=f"{replied_message.caption_markdown_v2_urled.replace(back_slash,'')}\n\n#{share_type}"
         )
 
-@validate
+@club
 def yeyu(update, context):
     share(update, context, share_type='野鱼屏幕')
-
 
 def help(update, context):
     update.message.reply_text(
@@ -114,7 +130,7 @@ def help(update, context):
 
 # Handle Message
 
-@validate
+@club
 def send_to_channel(update, context):
     message = update.message
     if not (message and message.from_user.id == 777000):
