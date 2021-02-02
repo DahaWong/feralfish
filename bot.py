@@ -15,8 +15,8 @@ defaults = Defaults(
     parse_mode="MARKDOWN",
     disable_notification=True
 )
-dev_user_id = int(config['DEV']['ID']) #daha
-channel_owner = int(config['CHANNEL']['OWNER']) #bob
+dev_user_id = int(config['DEV']['ID'])  # daha
+channel_owner = int(config['CHANNEL']['OWNER'])  # bob
 channel_id = config['CHANNEL']['ID']
 update_info = {
     'token': bot_token,
@@ -54,6 +54,7 @@ def club(func):
         return func(update, context, *args, **kwargs)
     return wrapped
 
+
 def dev(func):
     @wraps(func)
     def wrapped(update, context, *args, **kwargs):
@@ -84,14 +85,17 @@ def about(update, context):
         reply_markup=markup
     )
 
+
 @dev
 def show_proxy(update, context):
     update.message.pin()
-    buttons = [InlineKeyboardButton(text=f'{manifest.name}专线 {i}', url=proxy) for i, proxy in enumerate(proxies)]
+    buttons = [InlineKeyboardButton(
+        text=f'{manifest.name}专线 {i}', url=proxy) for i, proxy in enumerate(proxies)]
     update.message.reply_text(
         text='点击按钮以乘坐专线通往互联网彼岸',
-        reply_markup = InlineKeyboardMarkup.from_column(buttons)
+        reply_markup=InlineKeyboardMarkup.from_column(buttons)
     )
+
 
 @club
 def share(update, context, share_type='分享发现'):
@@ -116,9 +120,11 @@ def share(update, context, share_type='分享发现'):
             caption=f"{replied_message.caption_markdown_v2_urled.replace(back_slash,'')}\n\n#{share_type}"
         )
 
+
 @club
 def yeyu(update, context):
     share(update, context, share_type='野鱼屏幕')
+
 
 def help(update, context):
     update.message.reply_text(
@@ -140,27 +146,25 @@ def send_to_channel(update, context):
 
 
 # Handle Error
-
-
 def handle_error(update, context):
     if not update:
         return
     if update.effective_message:
-        text = f"刚刚的操作触发了一个错误，报告已抄送给[开发者](https://t.me/{manifest.author_id})。"
+        text = f"刚刚的操作触发了一个错误，报告已抄送给[开发者](tg://user?id={dev_user_id})。"
         update.effective_message.reply_text(text)
-    trace = "".join(traceback.format_tb(sys.exc_info()[2]))
     payload = ""
     if update.effective_user:
-        payload += f"<a href='tg://user?id={update.effective_user.id}'>有人</a>在使用中"
+        payload += f"有[用户](tg://user?id={update.effective_user.id})"
     if update.effective_chat.title:
-        payload += f'<i>{update.effective_chat.title}</i>'
+        payload += f"在{update.effective_chat.title}"
         if update.effective_chat.username:
             payload += f'(@{update.effective_chat.username})'
     if update.poll:
-        payload += f'投票 {update.poll.id}'
-    text = f"{payload}触发了一个错误：<code>{context.error}</code>。\n\n错误路径如下:\n\n<code>{trace}" \
-           f"</code>"
-    context.bot.send_message(dev_user_id, text, parse_mode=ParseMode.HTML)
+        payload += f'在发起投票 {update.poll.id} 时'
+    trace = "".join(traceback.format_tb(sys.exc_info()[2]))
+    text = f"{payload}触发了一个错误：`{context.error}`。\n\n"
+    text += f"错误路径如下:\n`{trace}`" if trace else ''
+    context.bot.send_message(dev_user_id, text)
 
 
 # Handlers
