@@ -20,19 +20,19 @@ defaults = Defaults(
 dev_user_id = int(config['DEV']['ID'])  # daha
 channel_owner = int(config['CHANNEL']['OWNER'])  # bob
 channel_id = config['CHANNEL']['ID']
-# update_info = {
-#     'token': bot_token,
-#     'use_context': True,
-#     'defaults': defaults
-# }
 update_info = {
-    'token': bot_token_test,
+    'token': bot_token,
     'use_context': True,
-    'defaults': defaults,
-    'request_kwargs': {
-        'proxy_url': proxy
-    }
+    'defaults': defaults
 }
+# update_info = {
+#     'token': bot_token_test,
+#     'use_context': True,
+#     'defaults': defaults,
+#     'request_kwargs': {
+#         'proxy_url': proxy
+#     }
+# }
 
 
 class manifest:
@@ -43,7 +43,7 @@ class manifest:
     author = "Daha"
     author_id = 'dahawong'
     author_url = "https://office.daha.me/"
-    version = "0.0.2"
+    version = "0.0.3"
     discription = ""
     repo = "https://github.com/dahawong/feralfish"
 
