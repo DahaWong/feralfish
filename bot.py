@@ -10,7 +10,7 @@ from functools import wraps
 config = configparser.ConfigParser()
 config.read('config.ini')
 bot_token = config['BOT']['TOKEN']
-bot_token_test = config['BOT']['TOKEN_TEST']
+# bot_token_test = config['BOT']['TOKEN_TEST']
 proxies = config['PROXIES']
 proxy = config['BOT']['PROXY']
 defaults = Defaults(
