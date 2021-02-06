@@ -11,28 +11,31 @@ defaults = Defaults(
     disable_notification=True,
     run_async=True
 )
+
 dev_user_id = int(config['DEV']['ID'])  # daha
 channel_owner = int(config['CHANNEL']['OWNER'])  # bob
 channel_id = config['CHANNEL']['ID']
 group_id = int(config['GROUP']['ID'])
 persistence = PicklePersistence(filename='persistence', store_chat_data=False, store_user_data=False)
-# Build
-# update_info = {
-#     'token': bot_token,
-#     'use_context': True,
-#     'defaults': defaults
-# }
 
-# Test
+# Build
 update_info = {
     'token': bot_token,
     'use_context': True,
     'defaults': defaults,
-    'request_kwargs': {
-        'proxy_url': proxy
-    },
     'persistence': persistence
 }
+
+# Test
+# update_info = {
+#     'token': bot_token,
+#     'use_context': True,
+#     'defaults': defaults,
+#     'request_kwargs': {
+#         'proxy_url': proxy
+#     },
+#     'persistence': persistence
+# }
 
 
 class manifest:
