@@ -1,5 +1,5 @@
 from feralfish.decorators import club
-from config import channel_id
+from config import channel_id, dev_user_id
 
 
 @club
@@ -12,3 +12,6 @@ def send_to_channel(update, context):
 
 def delete_state(update, context):
     update.message.delete()
+
+def get_chat_id(update, context):
+    context.bot.send_message(dev_user_id, update.effective_chat.id)
