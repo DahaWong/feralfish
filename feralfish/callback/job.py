@@ -11,17 +11,18 @@ def send_poll(context):
 
     msg = context.bot.send_poll(
         chat_id=group_id,
-        question='早上好！今天的心情如何？',
+        question='嗨，今天的心情怎么样？',
         options=[
-            '非常好',
-            '还不错',
-            '一般般',
-            '糟透了'
+            '☀️',
+            '🌥',
+            '🌦',
+            '🌧',
+            '🌪'
         ],
         allows_multiple_answers=False,
         is_anonymous=False
     )
 
-    msg.pin()
     poll_id = msg.poll.id
-    context.bot_data.update({'score': 0, 'count': 0, 'msg': msg, 'poll': poll_id})
+    msg.pin()
+    context.bot_data.update({'score': 0, 'count': 0, 'msg': msg, 'poll_id': poll_id})

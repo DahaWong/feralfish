@@ -27,15 +27,15 @@ update_info = {
 }
 
 # Test
-# update_info = {
-#     'token': bot_token,
-#     'use_context': True,
-#     'defaults': defaults,
-#     'request_kwargs': {
-#         'proxy_url': proxy
-#     },
-#     'persistence': persistence
-# }
+update_info_test = {
+    'token': bot_token,
+    'use_context': True,
+    'defaults': defaults,
+    'request_kwargs': {
+        'proxy_url': proxy
+    },
+    'persistence': persistence
+}
 
 
 class manifest:
