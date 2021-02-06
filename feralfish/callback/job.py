@@ -23,4 +23,5 @@ def send_poll(context):
     )
 
     msg.pin()
-    context.bot_data.update({'score': 0, 'count': 0, 'msg': msg})
+    poll_id = msg.poll.id
+    context.bot_data.update({'score': 0, 'count': 0, 'msg': msg, 'poll': poll_id})

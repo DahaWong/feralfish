@@ -3,6 +3,8 @@ moods = [10, 7.5, 5, 0]
 weather = ['🌪', '⛈', '🌨', '🌧', '☔️', '☂️', '🌦',  '⛅️', '🌥', '🌤', '☀️']
 
 def handle_poll_answer(update, context):
+    if context.bot_data['poll_id'] != update.poll_answer.poll_id:
+        return
     context.bot_data['count'] += 1
     mood = moods[update.poll_answer.option_ids[0]]
     context.bot_data['score'] += mood
