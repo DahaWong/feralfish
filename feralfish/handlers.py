@@ -37,7 +37,7 @@ message_handlers = [
         Filters.regex(r'#(?:上电视|野鱼屏幕|分享发现)'),
         message.send_to_channel
     ),
-    MessageHandler(Filters.text, message.get_chat_id),
+    # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
 
