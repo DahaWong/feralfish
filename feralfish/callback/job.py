@@ -1,5 +1,5 @@
 from config import group_id
-
+import random
 
 # validate!
 def send_poll(context):
@@ -9,12 +9,15 @@ def send_poll(context):
         context.bot.stop_poll(chat_id=group_id, message_id=msg.message_id)
     context.bot_data.clear()
 
+    hi = random.choice(['嗨','Hey','早','早上好','Yo','Hi'])
+    how = random.choice(['心情怎么样','心情如何'])
+
     msg = context.bot.send_poll(
         chat_id=group_id,
-        question='嗨，今天的心情怎么样？',
+        question=f'{hi}，今天的{how}？',
         options=[
-            '☀️',
-            '🌥',
+            '🏝',
+            '🌤',
             '🌦',
             '🌧',
             '🌪'
