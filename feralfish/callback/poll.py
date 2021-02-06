@@ -10,9 +10,9 @@ def handle_poll_answer(update, context):
     mood = moods[update.poll_answer.option_ids[0]]
     context.bot_data['score'] += mood
     weather_symbol = weather[round(context.bot_data['score']/context.bot_data['count'])]
-    print(context.bot_data['score'])
-    print(context.bot_data['count'])
-    print(weather_symbol)
+    # print(context.bot_data['score'])
+    # print(context.bot_data['count'])
+    # print(weather_symbol)
     context.bot.set_chat_title(group_id, f"{weather_symbol} 鮀浦镇｜灵感买家俱乐部")
     
     # context.bot.set_chat_description(update.effective_chat.id, (
