@@ -13,12 +13,7 @@ command_handlers = [
 message_handlers = [
     MessageHandler(
         Filters.chat_type.groups &
-        Filters.regex(r'#(?:上电视|野鱼屏幕|分享发现)'),
-        message.send_to_channel
-    ),
-    MessageHandler(
-        Filters.chat_type.groups &
-        Filters.update.edited_message &
+        Filters.update.messages &
         Filters.regex(r'#(?:上电视|野鱼屏幕|分享发现)'),
         message.send_to_channel
     ),
@@ -30,12 +25,6 @@ message_handlers = [
             Filters.status_update.new_chat_title
         ),
         message.delete_state
-    ),
-    MessageHandler(
-        Filters.chat_type.groups &
-        Filters.poll &
-        Filters.regex(r'#(?:上电视|野鱼屏幕|分享发现)'),
-        message.send_to_channel
     ),
     # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
