@@ -1,6 +1,7 @@
 from config import group_id
+import random
 moods = [10, 7.5, 5, 2.5, 0]
-weather = ['🌪', '🌨', '🌧', '☔️', '☂️', '🌦', '☁️',  '⛅️', '🌤', '☀️', '🏝']
+weather = ['🌪', random.choice('⛈️','❄️','🌨'), '🌧', '☔️', '☂️', '🌦', '☁️',  '⛅️', '🌤', random.choice('🏝', '🏞️', '🏖', '🌅', '📈', '☀️'), '🏝']
 
 def handle_poll_answer(update, context):
     if context.bot_data['poll_id'] != update.poll_answer.poll_id:
