@@ -4,4 +4,3 @@ __pycache__/*
 feralfish/callback/__pycache__/*
 config.ini
 persistence
-test.py
