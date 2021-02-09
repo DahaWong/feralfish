@@ -1,6 +1,7 @@
 from feralfish.decorators import club, channel
 from feralfish.utils import Music
 from config import channel_id, dev_user_id, music_phone, music_pwd
+from telegram import InputMediaAudio
 
 music = Music()
 music.login(music_phone, music_pwd)
@@ -28,11 +29,15 @@ def download_music(update, context):
             title, performer, pic = music.get_detail(music_id)
             message.reply_audio(
                 audio=music_url,
-                title = title,
                 caption=message.text,
                 allow_sending_without_reply=True,
-                performer=performer,
-                thumb=pic
+            ).edit_media(
+                InputMediaAudio(
+                    audio=music_url,
+                    title=title,
+                    performer=performer,
+                    thumb=pic
+                )
             )
     message.delete()
 
