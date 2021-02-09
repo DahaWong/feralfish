@@ -35,6 +35,15 @@ class Music(object):
         performer = result['ar'][0]['name']
         pic = result['al']['picUrl']
         return title, performer, pic
+
+    @staticmethod
+    def download(url, title):
+        path = f'public/audio/{title}.mp3'
+        res = requests.get(url)
+        with open(path, 'wb') as f:
+            f.write(res.content)
+        return path
+        
     def check_available(self, music_id):
         res = requests.get(url=f"{self.root}/check/music?id={music_id}")
         pprint.pprint(res.json())

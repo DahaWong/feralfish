@@ -27,20 +27,14 @@ def download_music(update, context):
             music_id = Music.extract_id(text)
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
-            msg = message.reply_audio(
-                audio=music_url,
+            path = music.download(music_url, title)
+            message.reply_audio(
+                audio=path,
+                title=title,
+                performer=performer,
+                thumb=pic,
                 caption=message.text,
                 allow_sending_without_reply=True,
-            )
-            file_id = msg.audio.file_id
-            print(title, performer, pic)
-            msg.edit_media(
-                InputMediaAudio(
-                    media=file_id,
-                    title=title,
-                    performer=performer,
-                    thumb=pic
-                )
             )
     message.delete()
 
