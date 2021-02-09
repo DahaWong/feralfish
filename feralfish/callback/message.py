@@ -25,6 +25,7 @@ def download_music(update, context):
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
             music_id = Music.extract_id(text)
+            if not music_id : continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)

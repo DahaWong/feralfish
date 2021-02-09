@@ -29,7 +29,7 @@ message_handlers = [
     MessageHandler(
         Filters.chat_type.channel &
         Filters.entity("url") & (
-            Filters.regex(r'youtube\.com') |
+            # Filters.regex(r'youtube\.com') |
             Filters.regex(r'music\.163\.com')
         ), message.download_music),
     # MessageHandler(Filters.text, message.get_chat_id),

@@ -1,6 +1,6 @@
 import requests
 from time import time
-from config import music_phone, music_pwd, music_api
+from config import music_api
 import pprint
 import re
 
@@ -30,7 +30,6 @@ class Music(object):
     def get_detail(self, music_id):
         res = requests.get(url=f"{self.root}/song/detail?ids={music_id}")
         result = res.json()['songs'][0]
-        print(result)
         title = result['name']
         performer = result['ar'][0]['name']
         pic = result['al']['picUrl']
@@ -52,5 +51,4 @@ class Music(object):
     @staticmethod
     def extract_id(url):
         song_id = re.match('.*song\?id=([0-9]+).*', url)[1]
-        print(song_id)
         return song_id
