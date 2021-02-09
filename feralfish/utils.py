@@ -32,8 +32,8 @@ class Music(object):
         result = res.json()['songs'][0]
         print(result)
         title = result['name']
-        performer = result['artists'][0]['name']
-        pic = result['album']['blurPicUrl']
+        performer = result['ar'][0]['name']
+        pic = result['al']['picUrl']
         return title, performer, pic
     def check_available(self, music_id):
         res = requests.get(url=f"{self.root}/check/music?id={music_id}")
