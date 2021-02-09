@@ -26,6 +26,12 @@ message_handlers = [
         ),
         message.delete_state
     ),
+    MessageHandler(
+        Filters.chat_type.channel &
+        Filters.entity("url") & (
+            Filters.regex(r'youtube\.com') |
+            Filters.regex(r'music\.163\.com')
+        ), message.download_music),
     # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
@@ -36,4 +42,4 @@ handlers = command_handlers.extend(message_handlers)
 def register_handlers(dispatcher):
     for handler in command_handlers:
         dispatcher.add_handler(handler)
-    # dispatcher.add_error_handler(error.handle)
+    dispatcher.add_error_handler(error.handle)

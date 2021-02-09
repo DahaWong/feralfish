@@ -18,6 +18,9 @@ channel_id = config['CHANNEL']['ID']
 group_id = int(config['GROUP']['ID'])
 persistence = PicklePersistence(filename='persistence', store_chat_data=False, store_user_data=False)
 
+music_phone = config['MUSIC']['PHONE']
+music_pwd = config['MUSIC']['PWD']
+music_api = config['MUSIC']['API']
 # Build
 update_info = {
     'token': bot_token,
