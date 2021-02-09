@@ -23,7 +23,7 @@ def download_music(update, context):
     entities = message.parse_entities()
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
-            music_url = Music.get_url(music_id=Music.extract_id(text))
+            music_url = music.get_url(music_id=Music.extract_id(text))
             message.reply_audio(
                 audio=music_url,
                 caption=message.text,
