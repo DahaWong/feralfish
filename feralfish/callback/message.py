@@ -28,9 +28,8 @@ def download_music(update, context):
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)
-            print(path)
             message.reply_audio(
-                audio=path,
+                audio=open(path, 'rb'),
                 title=title,
                 performer=performer,
                 thumb=pic,
