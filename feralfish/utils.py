@@ -43,7 +43,7 @@ class Music(object):
         with open(path, 'wb') as f:
             f.write(res.content)
         return path
-        
+
     def check_available(self, music_id):
         res = requests.get(url=f"{self.root}/check/music?id={music_id}")
         pprint.pprint(res.json())
