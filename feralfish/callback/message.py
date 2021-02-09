@@ -33,7 +33,7 @@ def download_music(update, context):
                 allow_sending_without_reply=True,
             ).edit_media(
                 InputMediaAudio(
-                    audio=music_url,
+                    media=music_url,
                     title=title,
                     performer=performer,
                     thumb=pic
