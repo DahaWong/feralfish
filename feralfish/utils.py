@@ -27,6 +27,13 @@ class Music(object):
     def get_url(self, music_id):
         res = requests.get(url=f"{self.root}/song/url?id={music_id}")
         return res.json()['data'][0]['url']
+    def get_detail(self, music_id):
+        res = requests.get(url=f"{self.root}/song/detail?ids={music_id}")
+        result = res.json()['songs'][0]
+        title = result['name']
+        performer = result['artists'][0]['name']
+        pic = result['album']['blurPicUrl']
+        return title, performer, pic
     def check_available(self, music_id):
         res = requests.get(url=f"{self.root}/check/music?id={music_id}")
         pprint.pprint(res.json())
