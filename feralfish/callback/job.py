@@ -18,11 +18,11 @@ def send_poll(context):
         chat_id=group_id,
         question=f'{hi}，今天的{how}？',
         options=[
-            random.choice('🏝', '🏞️', '🏖', '🌅', '📈'),
+            random.choice(['🏝', '🏞️', '🏖', '🌅', '📈']),
             '🌤',
             '🌦',
             '🌧',
-            random.choice('🌪','❄️')
+            random.choice(['🌪','❄️'])
         ],
         allows_multiple_answers=False,
         is_anonymous=False

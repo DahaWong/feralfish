@@ -4,8 +4,8 @@ moods = [10, 7.5, 5, 2.5, 0]
 
 
 def handle_poll_answer(update, context):
-    weather = ['🌪', random.choice('⛈️', '❄️', '🌨'), '🌧', '☔️', '☂️', '🌦',
-               '☁️',  '⛅️', '🌤', random.choice('🏝', '🏞️', '🏖', '🌅', '📈', '☀️'), '🏝']
+    weather = ['🌪', random.choice(['⛈️', '❄️', '🌨']), '🌧', '☔️', '☂️', '🌦',
+               '☁️',  '⛅️', '🌤', random.choice(['🏝', '🏞️', '🏖', '🌅', '📈', '☀️']), '🏝']
     if context.bot_data['poll_id'] != update.poll_answer.poll_id:
         return
 

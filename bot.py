@@ -8,7 +8,7 @@ updater = Updater(**update_info)
 register_handlers(updater.dispatcher)
 
 #Job
-# updater.job_queue.run_once(callback=job.send_poll, when=1)
+updater.job_queue.run_once(callback=job.send_poll, when=1)
 updater.job_queue.run_daily(job.send_poll, time=time(23,00))
 
 # Polling
