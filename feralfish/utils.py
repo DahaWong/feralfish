@@ -30,6 +30,7 @@ class Music(object):
     def get_detail(self, music_id):
         res = requests.get(url=f"{self.root}/song/detail?ids={music_id}")
         result = res.json()['songs'][0]
+        print(result)
         title = result['name']
         performer = result['artists'][0]['name']
         pic = result['album']['blurPicUrl']
