@@ -28,7 +28,6 @@ def download_music(update, context):
             title, performer, pic = music.get_detail(music_id)
             message.reply_audio(
                 audio=music_url,
-                filename=title,
                 title = title,
                 caption=message.text,
                 allow_sending_without_reply=True,
