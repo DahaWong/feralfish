@@ -12,12 +12,10 @@ def send_to_channel(update, context):
     message = update.effective_message
     if message.from_user.id == 777000:
         return
-    audio_messages = download_music(update, context)
-    if audio_messages:
-        for message in audio_messages:
-            message.forward(chat_id=f'@{channel_id}')
-        return
-    message.forward(chat_id=f'@{channel_id}')
+    forwarded = message.forward(chat_id=f'@{channel_id}')
+    audios = download_music(update, context)
+    if audios:
+        forwarded.reply_media_group(media=audios, allow_sending_without_reply=True)
 
 
 def delete_state(update, context):
@@ -51,8 +49,8 @@ def download_music(update, context):
             )
             audios.append(audio)
     if audios:
-        audio_messages = message.reply_media_group(media=audios, allow_sending_without_reply=True)
-        return audio_messages
+        message.reply_media_group(media=audios, allow_sending_without_reply=True)
+        return audios
 
 def get_chat_id(update, context):
     context.bot.send_message(dev_user_id, update.effective_chat.id)
