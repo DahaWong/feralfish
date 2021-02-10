@@ -23,6 +23,9 @@ def delete_state(update, context):
 
 
 @channel
+def parse_music(update, context):
+    download_music(update, context)
+
 def download_music(update, context):
     message = update.effective_message
     entities = message.parse_entities()
@@ -46,7 +49,8 @@ def download_music(update, context):
             )
             audios.append(audio)
     if audios:
-        audio_message = message.reply_media_group(media=audios)
+        audio_message = message.reply_media_group(media=audios, reply_to_message_id=None, allow_sending_without_reply=True)
+        message.delete()
         return audio_message
     message.delete()
 
