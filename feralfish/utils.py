@@ -7,32 +7,40 @@ import re
 
 class Music(object):
     root = music_api
+
     def login(self, phone, pwd):
         timestamp = int(time())
-        res = requests.get(url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}&timestamp={timestamp}")
+        res = requests.get(
+            url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}&timestamp={timestamp}")
         pprint.pprint(res.json())
         return res.json()
+
     def get_user(self):
         res = requests.get(url=f"{self.root}/user/detail")
-        pprint.pprint(res.json())
+        # pprint.pprint(res.json())
         return res.json()
+
     def check_login(self):
         res = requests.get(url=f"{self.root}/login/status")
         pprint.pprint(res.json())
-        return res.json()
+
     def search(self, keyword):
         res = requests.get(url=f"{self.root}/cloudsearch?keywords={keyword}")
         pprint.pprint(res.json())
         return res.json()
+
     def get_url(self, music_id):
         res = requests.get(url=f"{self.root}/song/url?id={music_id}")
         return res.json()['data'][0]['url']
+
     def get_detail(self, music_id):
         res = requests.get(url=f"{self.root}/song/detail?ids={music_id}")
         result = res.json()['songs'][0]
+        pprint.pprint(result)
         title = result['name']
         performer = result['ar'][0]['name']
-        pic = result['al']['picUrl']
+        pic = result['al']['picUrl']+'?param=30y30'  # with size of 30*30
+        print(pic)
         return title, performer, pic
 
     @staticmethod

@@ -25,16 +25,18 @@ def download_music(update, context):
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
             music_id = Music.extract_id(text)
-            if not music_id : continue
+            if not music_id:
+                continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)
+            caption = None if update.effective_chat.type == 'private' else message.text
             message.reply_audio(
                 audio=open(path, 'rb'),
                 title=title,
                 performer=performer,
                 thumb=pic,
-                caption=message.text,
+                caption=caption,
                 allow_sending_without_reply=True,
             )
     message.delete()
