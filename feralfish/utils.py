@@ -7,20 +7,21 @@ import re
 
 class Music(object):
     root = music_api
+    cookie = ''
 
     def login(self, phone, pwd):
         res = requests.get(
             url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}")
         pprint.pprint(res.json())
-        return res.json()
+        self.cookie = f"?cookie={res.json().get('cookie')}"
 
     def get_user(self):
-        res = requests.get(url=f"{self.root}/user/detail")
+        res = requests.get(url=f"{self.root}/user/detail{self.cookie}")
         # pprint.pprint(res.json())
         return res.json()
 
     def check_login(self):
-        res = requests.get(url=f"{self.root}/login/status")
+        res = requests.get(url=f"{self.root}/login/status{self.cookie}")
         pprint.pprint(res.json())
 
     def search(self, keyword):
@@ -29,7 +30,7 @@ class Music(object):
         return res.json()
 
     def get_url(self, music_id):
-        res = requests.get(url=f"{self.root}/song/url?id={music_id}")
+        res = requests.get(url=f"{self.root}/song/url?id={music_id}{self.cookie}")
         return res.json()['data'][0]['url']
 
     def get_detail(self, music_id):
