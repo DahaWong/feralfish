@@ -42,8 +42,7 @@ def download_music(update, context):
                 title=title,
                 parse_mode = None,
                 performer=performer,
-                thumb=pic,
-                allow_sending_without_reply=True,
+                thumb=pic
             )
             audios.append(audio)
     if audios:
