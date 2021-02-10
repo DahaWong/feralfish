@@ -32,18 +32,18 @@ def download_music(update, context):
     message = update.effective_message
     entities = message.parse_entities()
     audios = []
+    flag = 0
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
+            flag += 1
             music_id = Music.extract_id(text)
             if not music_id:
                 continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)
-            caption = None if update.effective_chat.type == 'private' else message.text
             audio = InputMediaAudio(
                 media=open(path, 'rb'),
-                caption=caption,
                 title=title,
                 parse_mode = None,
                 performer=performer,
@@ -51,10 +51,8 @@ def download_music(update, context):
             )
             audios.append(audio)
     if audios:
-        audio_messages = message.reply_media_group(media=audios, reply_to_message_id=None, allow_sending_without_reply=True)
-        message.delete()
+        audio_messages = message.reply_media_group(media=audios, allow_sending_without_reply=True)
         return audio_messages
-    message.delete()
 
 def get_chat_id(update, context):
     context.bot.send_message(dev_user_id, update.effective_chat.id)
