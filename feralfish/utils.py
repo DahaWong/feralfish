@@ -13,7 +13,7 @@ class Music(object):
         res = requests.get(
             url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}")
         pprint.pprint(res.json())
-        self.cookie = f"?cookie={res.json().get('cookie')}"
+        self.cookie = f"cookie={res.json().get('cookie')}"
 
     def get_user(self):
         res = requests.get(url=f"{self.root}/user/detail{self.cookie}")
@@ -21,7 +21,7 @@ class Music(object):
         return res.json()
 
     def check_login(self):
-        res = requests.get(url=f"{self.root}/login/status{self.cookie}")
+        res = requests.get(url=f"{self.root}/login/status?{self.cookie}")
         pprint.pprint(res.json())
 
     def search(self, keyword):
