@@ -58,5 +58,5 @@ class Music(object):
 
     @staticmethod
     def extract_id(url):
-        song_id = re.match('.*song\?id=([0-9]+).*', url)[1]
+        song_id = re.match('.*song\?id=([0-9]+).*', url)[1] or re.match('.*song/([0-9]+).*', url)[1]
         return song_id

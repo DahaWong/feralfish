@@ -33,6 +33,14 @@ message_handlers = [
             # Filters.regex(r'youtube\.com') |
             Filters.regex(r'music\.163\.com')
         ), message.download_music),
+    MessageHandler(
+        (~ Filters.chat_type.private) &
+        Filters.forwarded &
+        Filters.regex(r'#野鱼屏幕') &
+        Filters.entity("url") & (
+            # Filters.regex(r'youtube\.com') |
+            Filters.regex(r'music\.163\.com')
+        ), message.download_music),
     # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
