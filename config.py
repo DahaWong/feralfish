@@ -27,7 +27,8 @@ update_info = {
     'token': bot_token,
     'use_context': True,
     'defaults': defaults,
-    'persistence': persistence
+    'persistence': persistence,
+    'workers':6
 }
 
 # Test
