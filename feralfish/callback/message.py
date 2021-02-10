@@ -58,7 +58,7 @@ def download_music(update, context):
                 parse_mode=None,
                 performer=performer,
                 thumb=open(pic, 'rb'),
-                duration=MP3(path).info.length
+                duration=int(MP3(path).info.length)
             )
             audios.append(audio)
     if audios:
