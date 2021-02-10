@@ -54,7 +54,7 @@ class Music(object):
         return title, performer, pic_file
 
     @staticmethod
-    def download(url, title, context):
+    def download(url, title, update, context):
         path = f'public/audio/{title}.mp3'
         res = requests.get(url, stream=True)
         if not res.ok:
@@ -67,7 +67,7 @@ class Music(object):
                 if exc.errno != errno.EEXIST:
                     raise
         total = int(res.headers.get('content-length', 0))
-        chat_id = context.user_data['chat_id']
+        chat_id = update.effective_chat.id
         progress_bar = tqdm(
             total=total,
             unit='iB',

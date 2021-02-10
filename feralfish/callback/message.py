@@ -41,7 +41,7 @@ def download_music(update, context):
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             downloading_note = message.reply_text("正在下载…")
-            path = music.download(music_url, title, context)
+            path = music.download(music_url, title, update, context)
             audio = InputMediaAudio(
                 media=open(path, 'rb'),
                 title=title,
