@@ -39,7 +39,7 @@ class Music(object):
         pprint.pprint(result)
         title = result['name']
         performer = result['ar'][0]['name']
-        pic = result['al']['picUrl']+'?param=60y60'  # with size of 60*60
+        pic = result['al']['picUrl']+'?param=100y100'  # with size of 60*60
         print(pic)
         return title, performer, pic
 
