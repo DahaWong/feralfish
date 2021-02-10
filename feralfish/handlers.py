@@ -45,4 +45,4 @@ handlers = command_handlers.extend(message_handlers)
 def register_handlers(dispatcher):
     for handler in command_handlers:
         dispatcher.add_handler(handler)
-    # dispatcher.add_error_handler(error.handle)
+    dispatcher.add_error_handler(error.handle)
