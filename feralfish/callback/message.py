@@ -30,14 +30,17 @@ def download_music(update, context):
     message = update.effective_message
     entities = message.parse_entities()
     downloading_note = None
+    uploading_note = None
     audios = []
+    in_channel = update.effective_chat.type == 'channel'
     flag = 0
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
-            if not flag:
+            if not (flag and in_channel):
                 downloading_note = message.reply_text("欢迎使用野鱼之声！")
             flag += 1
-            downloading_note.edit_text(f'正在下载第 {flag} 首音乐…')
+            if not in_channel:
+                downloading_note.edit_text(f'正在下载第 {flag} 首音乐…')
             music_id = Music.extract_id(text)
             if not music_id:
                 continue
@@ -53,9 +56,11 @@ def download_music(update, context):
             )
             audios.append(audio)
     if audios:
-        uploading_note = downloading_note.edit_text("上传中，请稍候…")
+        if not in_channel:
+            uploading_note = downloading_note.edit_text("上传中，请稍候…")
         message.reply_media_group(media=audios, allow_sending_without_reply=True)
-        uploading_note.delete()
+        if not in_channel:
+            uploading_note.delete()
         return audios
 
 def get_chat_id(update, context):
