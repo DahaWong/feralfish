@@ -52,13 +52,17 @@ def download_music(update, context):
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)
+            try:
+                duration = int(MP3(path).info.length)
+            except:
+                duration = None
             audio = InputMediaAudio(
                 media=open(path, 'rb'),
                 title=title,
                 parse_mode=None,
                 performer=performer,
                 thumb=open(pic, 'rb'),
-                duration=int(MP3(path).info.length)
+                duration=duration
             )
             audios.append(audio)
     if audios:
