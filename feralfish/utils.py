@@ -30,7 +30,7 @@ class Music(object):
         return res.json()
 
     def get_url(self, music_id):
-        res = requests.get(url=f"{self.root}/song/url?id={music_id}")
+        res = requests.get(url=f"{self.root}/song/url?id={music_id}&{self.cookie}")
         return res.json()['data'][0]['url']
 
     def get_detail(self, music_id):
