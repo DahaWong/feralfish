@@ -5,7 +5,7 @@ from telegram import InputMediaAudio
 
 music = Music()
 music.login(music_phone, music_pwd)
-
+music.check_login()
 
 @club
 def send_to_channel(update, context):

@@ -9,9 +9,8 @@ class Music(object):
     root = music_api
 
     def login(self, phone, pwd):
-        timestamp = int(time())
         res = requests.get(
-            url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}&timestamp={timestamp}")
+            url=f"{self.root}/login/cellphone?phone={phone}&password={pwd}")
         pprint.pprint(res.json())
         return res.json()
 
