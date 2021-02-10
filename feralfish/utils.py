@@ -39,8 +39,7 @@ class Music(object):
         pprint.pprint(result)
         title = result['name']
         performer = result['ar'][0]['name']
-        pic = result['al']['picUrl']+'?param=100y100'  # with size of 60*60
-        print(pic)
+        pic = result['al']['picUrl']+'?param=100y100'  # with size of 100*100
         return title, performer, pic
 
     @staticmethod
@@ -58,5 +57,6 @@ class Music(object):
 
     @staticmethod
     def extract_id(url):
-        song_id = re.match('.*song\?id=([0-9]+).*', url)[1] or re.match('.*song/([0-9]+).*', url)[1]
+        match = re.match('.*song\?id=([0-9]+).*', url) or re.match('.*song/([0-9]+).*', url)
+        song_id = match[1]
         return song_id
