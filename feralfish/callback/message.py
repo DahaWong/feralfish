@@ -40,7 +40,7 @@ def download_music(update, context):
                 downloading_note = message.reply_text("欢迎使用野鱼之声！")
             flag += 1
             if not in_channel:
-                downloading_note.edit_text(f'正在下载第 {flag} 首音乐…')
+                downloading_note = downloading_note.edit_text(f'正在下载第 {flag} 首音乐…')
             music_id = Music.extract_id(text)
             if not music_id:
                 continue
