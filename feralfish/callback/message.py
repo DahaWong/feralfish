@@ -34,13 +34,15 @@ def download_music(update, context):
     flag = 0
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
+            if not flag:
+                downloading_note = message.reply_text("欢迎使用野鱼之声！")
             flag += 1
+            downloading_note.edit_text(f'正在下载第 {flag} 首音乐…')
             music_id = Music.extract_id(text)
             if not music_id:
                 continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
-            downloading_note = message.reply_text("正在下载…")
             path = music.download(music_url, title, update, context)
             audio = InputMediaAudio(
                 media=open(path, 'rb'),
@@ -51,7 +53,7 @@ def download_music(update, context):
             )
             audios.append(audio)
     if audios:
-        uploading_note = downloading_note.edit_text("正在上传，请稍候…")
+        uploading_note = downloading_note.edit_text("上传中，请稍候…")
         message.reply_media_group(media=audios, allow_sending_without_reply=True)
         uploading_note.delete()
         return audios
