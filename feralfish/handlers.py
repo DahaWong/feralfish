@@ -34,7 +34,6 @@ message_handlers = [
             Filters.regex(r'music\.163\.com')
         ), message.download_music),
     MessageHandler(
-        (~ Filters.chat_type.private) &
         Filters.forwarded,
         message.download_music),
     # MessageHandler(Filters.text, message.get_chat_id),
