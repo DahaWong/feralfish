@@ -27,9 +27,10 @@ message_handlers = [
         message.delete_state
     ),
     MessageHandler(
-        (~ Filters.chat_type.private) &
-        Filters.regex(r'#野鱼屏幕') &
-        Filters.entity("url") & (
+        (
+            (Filters.chat_type.channel & Filters.regex(r'#野鱼屏幕')) |
+            Filters.chat_type.private
+        ) & Filters.entity("url") & (
             # Filters.regex(r'youtube\.com') |
             Filters.regex(r'music\.163\.com')
         ), message.download_music),

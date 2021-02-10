@@ -10,8 +10,12 @@ music.check_login()
 @club
 def send_to_channel(update, context):
     message = update.effective_message
-    if message.from_user.id != 777000:
-        message.forward(chat_id=f'@{channel_id}')
+    if message.from_user.id == 777000:
+        return
+    audio_message = download_music(update, context)
+    if audio_message:
+        message = audio_message
+    message.forward(chat_id=f'@{channel_id}')
 
 
 def delete_state(update, context):
@@ -20,9 +24,9 @@ def delete_state(update, context):
 
 @channel
 def download_music(update, context):
-    print('in')
     message = update.effective_message
     entities = message.parse_entities()
+    audios = []
     for entity, text in entities.items():
         if entity.type == 'url':  # 163
             music_id = Music.extract_id(text)
@@ -32,17 +36,20 @@ def download_music(update, context):
             title, performer, pic = music.get_detail(music_id)
             path = music.download(music_url, title)
             caption = None if update.effective_chat.type == 'private' else message.text
-            message.reply_audio(
-                audio=open(path, 'rb'),
+            audio = InputMediaAudio(
+                media=open(path, 'rb'),
+                caption=caption,
                 title=title,
+                parse_mode = None,
                 performer=performer,
                 thumb=pic,
-                caption=caption,
                 allow_sending_without_reply=True,
-                parse_mode = None
             )
+            audios.append(audio)
+    if audios:
+        audio_message = message.reply_media_group(media=audios)
+        return audio_message
     message.delete()
-
 
 def get_chat_id(update, context):
     context.bot.send_message(dev_user_id, update.effective_chat.id)
