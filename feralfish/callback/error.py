@@ -2,7 +2,8 @@ from config import dev_user_id, manifest
 import sys
 import traceback
 
-def handle_error(update, context):
+
+def handle(update, context):
     if not update:
         return
     if update.effective_message:
