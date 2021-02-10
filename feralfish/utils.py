@@ -5,8 +5,6 @@ import pprint
 import re
 import os
 import errno
-from tqdm.contrib.telegram import tqdm
-from config import bot_token
 
 
 class Music(object):
