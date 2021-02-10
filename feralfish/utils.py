@@ -1,8 +1,12 @@
 import requests
-from time import time
+# from time import time
 from config import music_api
 import pprint
 import re
+import os
+import errno
+from tqdm.contrib.telegram import tqdm
+from config import bot_token
 
 
 class Music(object):
@@ -41,7 +45,8 @@ class Music(object):
         title = result['name']
         album_id = result['al']['id']
         performer = result['ar'][0]['name']
-        pic_url = result['al']['picUrl']+'?param=100y100'  # with size of 100*100
+        pic_url = result['al']['picUrl'] + \
+            '?param=100y100'  # with size of 100*100
         pic = requests.get(pic_url).content
         pic_file = f"public/logo/{album_id}.jpg"
         with open(pic_file, 'wb') as f:
@@ -49,11 +54,36 @@ class Music(object):
         return title, performer, pic_file
 
     @staticmethod
-    def download(url, title):
+    def download(url, title, context):
         path = f'public/audio/{title}.mp3'
-        res = requests.get(url)
+        res = requests.get(url, stream=True)
+        if not res.ok:
+            raise Exception(f'下载音频出错～ 状态码：{res.status_code}')
+        block_size = 1024
+        if not os.path.exists(os.path.dirname(path)):
+            try:
+                os.makedirs(os.path.dirname(path))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+        total = int(res.headers.get('content-length', 0))
+        chat_id = context.user_data['chat_id']
+        progress_bar = tqdm(
+            total=total,
+            unit='iB',
+            token=bot_token,
+            chat_id=chat_id,
+            bar_format='{percentage:3.0f}% |{bar:8}|'
+        )
         with open(path, 'wb') as f:
-            f.write(res.content)
+            for data in res.iter_content(block_size):
+                progress_bar.update(len(data))
+                f.write(data)
+            message_id = progress_bar.tgio.message_id
+        context.bot.delete_message(chat_id, message_id)
+        progress_bar.close()
+        if total != 0 and progress_bar.n != total:
+            raise Exception("下载进度条出错！")
         return path
 
     def check_available(self, music_id):
