@@ -4,7 +4,7 @@
 
 ## 简介
 
-一个 [Telegram Bot](https://core.telegram.org/bots/api) 机器人，[灵感买家俱乐部](https://club.q24.io/)鮀浦镇里的小小管理员。
+一个 [Telegram Bot](https://core.telegram.org/bots/api)，[灵感买家俱乐部](https://club.q24.io/)鮀浦镇里的小小管理员。
 
 这是一个功能不太复杂的 Bot，或许可以用来初探 Bot 开发。
 
