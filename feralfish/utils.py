@@ -1,5 +1,5 @@
 import requests
-from config import music_api
+from config import music_api, bot_token
 import pprint
 import re
 import os
