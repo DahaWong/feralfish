@@ -5,6 +5,7 @@ import re
 import os
 import errno
 from tqdm.contrib.telegram import tqdm
+from youtube_dl import YoutubeDL
 #from time import time
 
 
@@ -96,3 +97,10 @@ class Music(object):
                          url) or re.match('.*song/([0-9]+).*', url)
         if match:
             return match[1]
+
+class YTB(object):
+    @staticmethod
+    def download(url):
+        audio_downloder = YoutubeDL({'format':'bestaudio'})
+        info = audio_downloder.extract_info(url)
+        print(info)
