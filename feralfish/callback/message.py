@@ -51,7 +51,7 @@ def download_music(update, context):
                 continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
-            path = music.download(music_url, title)
+            path = music.download(music_url, title, update, context)
             try:
                 duration = int(MP3(path).info.length)
             except:
