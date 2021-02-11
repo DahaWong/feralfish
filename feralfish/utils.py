@@ -65,7 +65,7 @@ class Music(object):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
-        block_size = 4096  # 0.5 KB
+        block_size = 8192  # 1 KB
         total = int(res.headers.get('content-length', 0))
         chat_id = update.effective_chat.id
         progress_bar = tqdm(
