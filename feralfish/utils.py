@@ -1,10 +1,11 @@
 import requests
-# from time import time
 from config import music_api
 import pprint
 import re
 import os
 import errno
+from tqdm.contrib.telegram import tqdm
+#from time import time
 
 
 class Music(object):
@@ -52,9 +53,9 @@ class Music(object):
         return title, performer, pic_file
 
     @staticmethod
-    def download(url, title):
+    def download(url, title, update, context):
         path = f'public/audio/{title}.mp3'
-        res = requests.get(url)
+        res = requests.get(url, stream=True)
         if not res.ok:
             raise Exception(f'下载音频出错～ 状态码：{res.status_code}')
         if not os.path.exists(os.path.dirname(path)):
@@ -63,8 +64,25 @@ class Music(object):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
+        block_size = 4096  # 0.5 KB
+        total = int(res.headers.get('content-length', 0))
+        chat_id = update.effective_chat.id
+        progress_bar = tqdm(
+            total=total,
+            unit='iB',
+            token=bot_token,
+            chat_id=chat_id,
+            bar_format='{percentage:3.0f}% |{bar:8}|'
+        )
         with open(path, 'wb') as f:
-            f.write(res.content)
+            for data in res.iter_content(block_size):
+                progress_bar.update(len(data))
+                f.write(data)
+            message_id = progress_bar.tgio.message_id
+        context.bot.delete_message(chat_id, message_id)
+        progress_bar.close()
+        if total != 0 and progress_bar.n != total:
+            raise Exception("ERROR: something went wrong with progress bar.")
         return path
 
     def check_available(self, music_id):
