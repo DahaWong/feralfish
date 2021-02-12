@@ -59,11 +59,14 @@ def download_music(update, context):
             audio = InputMediaAudio(
                 # media=open(path, 'rb'),
                 media=music_url,
-                filename = title
+                filename = title,
+                title = title
                 # duration=duration
             )
+            print(audio.performer)
             audio.thumb = pic
             audio.performer = performer
+            print(audio.performer)
             audios.append(audio)
     if audios:
         if not in_channel:
