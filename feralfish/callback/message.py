@@ -51,25 +51,29 @@ def download_music(update, context):
                 continue
             music_url = music.get_url(music_id)
             title, performer, pic = music.get_detail(music_id)
-            path = music.download(music_url, title, update, context)
-            try:
-                duration = int(MP3(path).info.length)
-            except:
-                duration = None
+            # path = music.download(music_url, title, update, context)
+            # try:
+            #     duration = int(MP3(path).info.length)
+            # except:
+            #     duration = None
             audio = InputMediaAudio(
-                media=open(path, 'rb'),
+                # media=open(path, 'rb'),
+                media=music_url,
                 title=title,
                 parse_mode=None,
                 performer=performer,
                 thumb=open(pic, 'rb'),
-                duration=duration
+                # duration=duration
             )
             audios.append(audio)
     if audios:
         if not in_channel:
             uploading_note = downloading_note.edit_text("上传中，请稍候…")
         message.reply_media_group(
-            media=audios, allow_sending_without_reply=True)
+            media=audios, 
+            allow_sending_without_reply=True,
+            timeout = 180
+        )
         if not in_channel:
             uploading_note.delete()
         return audios
