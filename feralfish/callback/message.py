@@ -59,10 +59,11 @@ def download_music(update, context):
             audio = InputMediaAudio(
                 # media=open(path, 'rb'),
                 media=music_url,
+                filename = title,
                 title=title,
                 parse_mode=None,
                 performer=performer,
-                thumb=open(pic, 'rb'),
+                thumb=pic,
                 # duration=duration
             )
             audios.append(audio)
