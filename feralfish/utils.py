@@ -51,7 +51,7 @@ class Music(object):
         pic_file = f"public/logo/{album_id}.jpg"
         with open(pic_file, 'wb') as f:
             f.write(pic)
-        return title, performer, pic
+        return title, performer, pic_file
 
     @staticmethod
     def download(url, title, update, context):
