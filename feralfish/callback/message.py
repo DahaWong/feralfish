@@ -65,7 +65,7 @@ def download_music(update, context):
                 #     f'歌名：{title}\n'\
                 #     f'演唱：#{performer}',
                 performer = performer,
-                thumb=pic,
+                thumb=open(pic, 'rb'),
                 duration=duration
                 # duration=duration
             )

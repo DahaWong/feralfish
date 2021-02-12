@@ -43,15 +43,15 @@ class Music(object):
         result = res.json()['songs'][0]
         pprint.pprint(result)
         title = result['name']
-        # album_id = result['al']['id']
+        album_id = result['al']['id']
         performer = result['ar'][0]['name']
         pic_url = result['al']['picUrl'] + \
             '?param=100y100'  # with size of 100*100
-        # pic = requests.get(pic_url).content
-        # pic_file = f"public/logo/{album_id}.jpg"
-        # with open(pic_file, 'wb') as f:
-            # f.write(pic)
-        return title, performer, pic_url
+        pic = requests.get(pic_url).content
+        pic_file = f"public/logo/{album_id}.jpg"
+        with open(pic_file, 'wb') as f:
+            f.write(pic)
+        return title, performer, pic
 
     @staticmethod
     def download(url, title, update, context):
@@ -98,9 +98,10 @@ class Music(object):
         if match:
             return match[1]
 
+
 class YTB(object):
     @staticmethod
     def download(url):
-        audio_downloder = YoutubeDL({'format':'bestaudio'})
+        audio_downloder = YoutubeDL({'format': 'bestaudio'})
         info = audio_downloder.extract_info(url)
         print(info)
