@@ -35,7 +35,7 @@ class Music(object):
 
     def get_url(self, music_id):
         res = requests.get(
-            url=f"{self.root}/song/url?id={music_id}&{self.cookie}")
+            url=f"{self.root}/song/url?id={music_id}&br=256000&{self.cookie}")
         return res.json()['data'][0]['url']
 
     def get_detail(self, music_id):
@@ -65,15 +65,15 @@ class Music(object):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
-        block_size = 8192  # 1 KB
+        block_size = 2048
         total = int(res.headers.get('content-length', 0))
         chat_id = update.effective_chat.id
         progress_bar = tqdm(
             total=total,
-            unit='iB',
+            unit='it',
             token=bot_token,
             chat_id=chat_id,
-            bar_format='{percentage:3.0f}% |{bar:8}|'
+            bar_format='{percentage:3.0f}% |{bar:6}|'
         )
         with open(path, 'wb') as f:
             for data in res.iter_content(block_size):
