@@ -60,7 +60,8 @@ def download_music(update, context):
                 # media=open(path, 'rb'),
                 media=music_url,
                 filename = title,
-                title = title
+                title = title,
+                performer = 'test'
                 # duration=duration
             )
             print(audio.performer)
