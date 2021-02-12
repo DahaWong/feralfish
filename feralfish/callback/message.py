@@ -61,7 +61,9 @@ def download_music(update, context):
                 media=music_url,
                 filename = title,
                 title = title,
-                caption='just test',
+                caption=
+                    f'歌名：{title}'\
+                    f'演唱：#{performer}',
                 performer = performer,
                 thumb=pic
                 # duration=duration
