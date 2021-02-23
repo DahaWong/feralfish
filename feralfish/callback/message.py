@@ -14,11 +14,11 @@ def send_to_channel(update, context):
     message = update.effective_message
     if message.from_user.id == 777000:
         return
-    forwarded = message.forward(chat_id=f'@{channel_id}')
-    audios = download_music(update, context)
-    if audios:
-        forwarded.reply_media_group(
-            media=audios, allow_sending_without_reply=True)
+    message.forward(chat_id=f'@{channel_id}')
+    # audios = download_music(update, context)
+    # if audios:
+    #     forwarded.reply_media_group(
+    #         media=audios, allow_sending_without_reply=True)
 
 
 def delete_state(update, context):
