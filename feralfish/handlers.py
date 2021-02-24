@@ -35,7 +35,7 @@ message_handlers = [
                 Filters.regex(r'music\.163\.com')
             )
         ), message.download_music),
-    MessageHandler(Filters.text, message.get_chat_id),
+    # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
 
