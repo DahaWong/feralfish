@@ -60,11 +60,11 @@ def download_music(update, context):
                 media=open(path, 'rb'),
                 # media=music_url,
                 # filename = title,
-                title = title,
+                title=title,
                 # caption=
                 #     f'歌名：{title}\n'\
                 #     f'演唱：#{performer}',
-                performer = performer,
+                performer=performer,
                 thumb=open(pic, 'rb'),
                 duration=duration
                 # duration=duration
@@ -74,9 +74,9 @@ def download_music(update, context):
         if not in_channel:
             uploading_note = downloading_note.edit_text("上传中，请稍候…")
         message.reply_media_group(
-            media=audios, 
+            media=audios,
             allow_sending_without_reply=True,
-            timeout = 180
+            timeout=180
         )
         if not in_channel:
             uploading_note.delete()
@@ -85,3 +85,7 @@ def download_music(update, context):
 
 def get_chat_id(update, context):
     context.bot.send_message(dev_user_id, update.effective_chat.id)
+
+
+def handle_legacy(update, context):
+    update.message.delete()

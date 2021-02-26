@@ -35,6 +35,10 @@ message_handlers = [
                 Filters.regex(r'music\.163\.com')
             )
         ), message.download_music),
+    MessageHandler(
+        Filters.chat(username="castpodchat") & (
+            Filters.regex(r'^╳$') | Filters.regex(r'^随机波动StochasticVolatility$')
+        ), message.handle_legacy),
     # MessageHandler(Filters.text, message.get_chat_id),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
