@@ -1,0 +1,7 @@
+.vscode/*
+*/__pycache__/*
+__pycache__/*
+ajichemist/callback/__pycache__/*
+config.ini
+persistence
+test.py
