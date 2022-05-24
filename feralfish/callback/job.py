@@ -1,4 +1,5 @@
-from config import group_id
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from config import group_id, channel_id, question_channel_name
 import random
 
 
@@ -30,3 +31,40 @@ async def send_poll(context):
     await msg.pin()
     context.bot_data.update(
         {'score': 0, 'count': 0, 'msg': msg, 'poll_id': poll_id})
+
+
+async def send_analysis(context):
+    questions_count = context.bot_data.get('questions_count', 0)
+    feedback_count = context.bot_data.get('questions_feedback_count', 0)
+    if feedback_count:
+        text = (
+            f"晚上好，我们本周共发出 {questions_count} 个灵感买家的问题，并收到了 {feedback_count if feedback_count else 0} 条反馈。\n\n"
+            "这一周你都在思考些什么呢？欢迎填表分享你的问题，帮助更新我们的灵感买家问题库。"
+        )
+    else:
+        text = (
+            f"晚上好，我们本周共发出 {questions_count} 个灵感买家的问题，不过还没收到大家的反馈。\n\n"
+            "这一周你都在思考些什么呢？欢迎填表分享你的问题，帮助更新我们的灵感买家问题库。"
+        )
+    await context.bot.send_message(
+        chat_id=f"@{channel_id}",
+        text=text,
+        reply_markup=InlineKeyboardMarkup.from_button(
+            InlineKeyboardButton(
+                text="分享你的问题",
+                url="https://daha.me"
+            )
+        )
+    )
+    await context.bot.send_message(
+        chat_id=f"@{question_channel_name}",
+        text=text,
+        reply_markup=InlineKeyboardMarkup.from_button(
+            InlineKeyboardButton(
+                text="分享你的问题",
+                url="https://daha.me"
+            )
+        )
+    )
+    context.bot_data.pop('questions_feedback_count')
+    context.bot_data.pop('questions_count')

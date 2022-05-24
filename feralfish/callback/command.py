@@ -87,6 +87,27 @@ async def get_chat_id(update, context):
     await context.bot.send_message(dev_user_id, update.effective_chat.id)
 
 
+async def get_question_analysis(update, context):
+    questions_count = context.bot_data.get('questions_count', 0)
+    feedback_count = context.bot_data.get('questions_feedback_count', 0)
+    if feedback_count:
+        text = (
+            f"晚上好，我们本周共发出 {questions_count} 个灵感买家的问题，并收到了 {feedback_count} 条反馈。\n\n"
+            "这一周你都在思考些什么呢？欢迎填表分享你的问题，帮助更新我们的灵感买家问题库。"
+        )
+    else:
+        text = (
+            f"晚上好，我们本周共发出 {questions_count} 个灵感买家的问题，不过还没收到大家的反馈。\n\n"
+            "这一周你都在思考些什么呢？欢迎填表分享你的问题，帮助更新我们的灵感买家问题库。"
+        )
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=text,
+    )
+    # context.bot_data['questions_count'] = 0
+    # context.bot_data['questions_feedback_count'] = 0
+
+
 async def command_in_group_without_reply(update, context):
     await update.effective_message.reply_text(
         text=(

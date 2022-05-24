@@ -13,6 +13,7 @@ handlers = [
                    filters.Chat(config.group_id)),
     CommandHandler('id', command.get_chat_id),
     CommandHandler('init', command.init),
+    CommandHandler('q', command.get_question_analysis),
     MessageHandler(filters.Chat(config.group_id) &
                    filters.COMMAND &
                    ~filters.REPLY, command.command_in_group_without_reply),
@@ -42,6 +43,10 @@ handlers = [
             filters.Regex(r'^╳$') | filters.Regex(
                 r'^随机波动StochasticVolatility$')
         ), message.handle_legacy),
+    MessageHandler(
+        filters.Chat(config.question_group_id),
+        message.count_questions
+    ),
     PollAnswerHandler(poll.handle_poll_answer)
 ]
 

@@ -15,6 +15,8 @@ defaults = Defaults(
 channel_id = config['CHANNEL']['ID']
 group_id = int(config['GROUP']['ID'])
 dev_user_id = int(config['DEV']['ID'])
+question_group_id = int(config['QUESTIONS']['GROUP_ID'])
+question_channel_name = config['QUESTIONS']['CHANNEL_NAME']
 persistence = PicklePersistence('persistence')
 
 
