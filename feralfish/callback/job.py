@@ -1,5 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from config import group_id, channel_id, question_channel_name
+from config import group_id, channel_id, question_channel_name, manifest
 import random
 
 
@@ -52,7 +52,7 @@ async def send_analysis(context):
         reply_markup=InlineKeyboardMarkup.from_button(
             InlineKeyboardButton(
                 text="分享你的问题",
-                url="https://daha.me"
+                url=manifest.url+'?start=add_a_question'
             )
         )
     )
@@ -62,7 +62,7 @@ async def send_analysis(context):
         reply_markup=InlineKeyboardMarkup.from_button(
             InlineKeyboardButton(
                 text="分享你的问题",
-                url="https://daha.me"
+                url=manifest.url+'?start=add_a_question'
             )
         )
     )

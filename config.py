@@ -19,11 +19,15 @@ question_group_id = int(config['QUESTIONS']['GROUP_ID'])
 question_channel_name = config['QUESTIONS']['CHANNEL_NAME']
 persistence = PicklePersistence('persistence')
 
+notion_token = config['NOTION']['TOKEN']
+notion_database_id = config['NOTION']['DATABASE_ID']
+
 
 class manifest:
     name = "野鱼"
     group_name = "野鱼日报"
     bot_id = "FeralFishBot"
+    url = "https://t.me/FeralFishBot"
     author = "Daha"
     author_id = 'dahawong'
     author_url = "https://daha.me/"

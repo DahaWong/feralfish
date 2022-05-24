@@ -1,5 +1,7 @@
 from telegram import BotCommandScopeAllGroupChats, BotCommandScopeAllPrivateChats, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ConversationHandler
 from config import manifest, channel_id, dev_user_id, private_commands, group_commands
+from feralfish.utils import notion
 
 
 async def init(update, context):
@@ -11,8 +13,20 @@ async def init(update, context):
 
 
 async def start(update, context):
-    await update.effective_message.reply_markdown(
-        f"你好，我是{manifest.name}！[{manifest.group_name}](https://t.me/{channel_id})的管家。")
+    command_arg = context.args[0] if context.args else None
+    if command_arg == 'add_a_question':
+        await update.message.reply_text(
+            text='告诉我们你的问题：',
+            reply_markup=InlineKeyboardMarkup.from_button(
+                InlineKeyboardButton(
+                    '取消', callback_data='cancel_adding_question')
+            )
+        )
+        return 0
+    else:
+        await update.message.reply_markdown(
+            f"你好，我是{manifest.name}！[{manifest.group_name}](https://t.me/{channel_id})的管家。")
+        return ConversationHandler.END
 
 
 async def about(update, context):
@@ -103,9 +117,20 @@ async def get_question_analysis(update, context):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=text,
+        reply_markup=InlineKeyboardMarkup.from_button(
+            InlineKeyboardButton(
+                text="分享你的问题",
+                url=manifest.url+'?start=add_a_question'
+            )
+        )
     )
     # context.bot_data['questions_count'] = 0
     # context.bot_data['questions_feedback_count'] = 0
+
+
+async def get_notion_database(update, context):
+    database_id = await notion.get_database()
+    await update.effective_message.reply_markdown(f"数据库 ID：`{database_id}`")
 
 
 async def command_in_group_without_reply(update, context):

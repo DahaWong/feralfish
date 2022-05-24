@@ -1,4 +1,6 @@
 from config import channel_id, group_id
+from feralfish.utils import notion
+from telegram.ext import ConversationHandler
 
 
 async def send_to_channel(update, context):
@@ -20,6 +22,13 @@ async def count_questions(update, context):
     elif message.reply_to_message and message.reply_to_message.is_automatic_forward:
         context.bot_data['questions_feedback_count'] = context.bot_data.get(
             'questions_feedback_count', 0) + 1
+
+
+async def add_question_to_notion(update, context):
+    question = update.message.text
+    await notion.create_page(title=question)
+    await update.message.reply_markdown(f"问题收到啦，感谢分享！")
+    return ConversationHandler.END
 
 
 async def delete_state(update, context):

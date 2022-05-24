@@ -1,9 +1,27 @@
-from telegram.ext import CommandHandler, MessageHandler, filters, PollAnswerHandler
-from feralfish.callback import message, command, poll, error
+from telegram import CallbackQuery
+from telegram.ext import CommandHandler, MessageHandler, filters, PollAnswerHandler, ConversationHandler, CallbackQueryHandler
+from feralfish.callback import message, command, poll, error, callback_query
 import config
 
+# Question-adding conversation handlers:
+start_handler = CommandHandler('start', command.start)
+add_question_handler = MessageHandler(
+    filters.UpdateType.MESSAGE & filters.TEXT,
+    message.add_question_to_notion
+)
+cancel_add_question_handler = CallbackQueryHandler(
+    callback=callback_query.cancel_add_question,
+    pattern=r'^cancel_adding_question'
+)
+questions_conversation_handler = ConversationHandler(
+    entry_points=[start_handler],
+    states={
+        0: [add_question_handler, cancel_add_question_handler],
+    },
+    fallbacks=[],
+)
+
 handlers = [
-    CommandHandler('start', command.start),
     CommandHandler('about', command.about),
     CommandHandler('share', command.share, filters.REPLY &
                    filters.Chat(config.group_id)),
@@ -14,6 +32,7 @@ handlers = [
     CommandHandler('id', command.get_chat_id),
     CommandHandler('init', command.init),
     CommandHandler('q', command.get_question_analysis),
+    CommandHandler('n', command.get_notion_database),
     MessageHandler(filters.Chat(config.group_id) &
                    filters.COMMAND &
                    ~filters.REPLY, command.command_in_group_without_reply),
@@ -47,7 +66,8 @@ handlers = [
         filters.Chat(config.question_group_id),
         message.count_questions
     ),
-    PollAnswerHandler(poll.handle_poll_answer)
+    PollAnswerHandler(poll.handle_poll_answer),
+    questions_conversation_handler
 ]
 
 
