@@ -11,18 +11,20 @@ async def init(update, context):
                                       scope=BotCommandScopeAllGroupChats())
     await context.bot.send_message(dev_user_id, '指令初始化完成')
 
+async def question(update, context):
+    await update.message.reply_text(
+        text='请输入你的问题：',
+        reply_markup=InlineKeyboardMarkup.from_button(
+            InlineKeyboardButton(
+                '取消', callback_data='cancel_adding_question')
+        )
+    )
+    return 0
 
 async def start(update, context):
     command_arg = context.args[0] if context.args else None
     if command_arg == 'add_a_question':
-        await update.message.reply_text(
-            text='告诉我们你的问题：',
-            reply_markup=InlineKeyboardMarkup.from_button(
-                InlineKeyboardButton(
-                    '取消', callback_data='cancel_adding_question')
-            )
-        )
-        return 0
+        return await question(update, context)
     else:
         await update.message.reply_markdown(
             f"你好，我是{manifest.name}！[{manifest.group_name}](https://t.me/{channel_id})的管家。")

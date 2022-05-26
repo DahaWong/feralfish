@@ -38,7 +38,8 @@ class manifest:
 
 private_commands = [
     BotCommand('start', '开始'),
-    BotCommand('about', '关于')
+    BotCommand('about', '关于'),
+    BotCommand('question', '分享最近困扰你的问题'),
 ]
 
 group_commands = [

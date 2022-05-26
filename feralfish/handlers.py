@@ -1,20 +1,23 @@
-from telegram import CallbackQuery
 from telegram.ext import CommandHandler, MessageHandler, filters, PollAnswerHandler, ConversationHandler, CallbackQueryHandler
 from feralfish.callback import message, command, poll, error, callback_query
 import config
 
 # Question-adding conversation handlers:
 start_handler = CommandHandler('start', command.start)
+question_command_handler = CommandHandler('question', command.question)
+
 add_question_handler = MessageHandler(
     filters.UpdateType.MESSAGE & filters.TEXT,
     message.add_question_to_notion
 )
+
 cancel_add_question_handler = CallbackQueryHandler(
     callback=callback_query.cancel_add_question,
     pattern=r'^cancel_adding_question'
 )
+
 questions_conversation_handler = ConversationHandler(
-    entry_points=[start_handler],
+    entry_points=[start_handler, question_command_handler],
     states={
         0: [add_question_handler, cancel_add_question_handler],
     },
