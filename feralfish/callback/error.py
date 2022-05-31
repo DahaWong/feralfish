@@ -1,9 +1,11 @@
+from telegram import Update
+from telegram.ext import CallbackContext
 from config import dev_user_id, manifest
 import sys
 import traceback
 
 
-async def handle(update, context):
+async def handle(update: Update, context: CallbackContext):
     if not update:
         return
     if update.effective_message:

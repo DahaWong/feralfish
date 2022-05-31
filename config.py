@@ -30,20 +30,27 @@ class manifest:
     url = "https://t.me/FeralFishBot"
     author = "Daha"
     author_id = 'dahawong'
-    author_url = "https://daha.me/"
-    version = "1.1.0"
+    author_url = "https://dreamlong.design/"
+    version = "1.2.0"
     discription = ""
     repo = "https://github.com/dahawong/feralfish"
 
 
 private_commands = [
-    BotCommand('start', '开始'),
-    BotCommand('about', '关于'),
-    BotCommand('question', '分享最近困扰你的问题'),
+    BotCommand('about', '关于野鱼机器人'),
+    BotCommand('question', '分享一则让你疑惑的问题'),
+]
+
+dev_commands = [
+    BotCommand('about', '关于野鱼机器人'),
+    BotCommand('question', '分享一则让你疑惑的问题'),
+    BotCommand('init', '初始化命令范围'),
+    BotCommand('get_bot_data', '获取机器人数据'),
+    BotCommand('test_recent_analysis', '测试今日问题分析'),
 ]
 
 group_commands = [
-    BotCommand('tv', '上电视'),
-    BotCommand('news', '小事'),
-    BotCommand('share', '分享发现'),
+    BotCommand('tv', '上电视：分享你的新作品或作品新进展'),
+    BotCommand('share', '分享发现：分享所见所闻，如：文章、音乐…'),
+    BotCommand('news', '小事：分享你与俱乐部会员间发生的小事'),
 ]

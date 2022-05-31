@@ -7,7 +7,7 @@ start_handler = CommandHandler('start', command.start)
 question_command_handler = CommandHandler('question', command.question)
 
 add_question_handler = MessageHandler(
-    filters.UpdateType.MESSAGE & filters.TEXT,
+    filters.UpdateType.MESSAGE & filters.TEXT & ~filters.COMMAND,
     message.add_question_to_notion
 )
 
@@ -33,9 +33,11 @@ handlers = [
     CommandHandler('news', command.news, filters.REPLY &
                    filters.Chat(config.group_id)),
     CommandHandler('id', command.get_chat_id),
-    CommandHandler('init', command.init),
     CommandHandler('q', command.get_question_analysis),
     CommandHandler('n', command.get_notion_database),
+    CommandHandler('init', command.init, filters=filters.Chat(config.dev_user_id)),
+    CommandHandler('get_bot_data', command.get_bot_data, filters=filters.Chat(config.dev_user_id)),
+    CommandHandler('test_recent_analysis', command.test_recent_analysis, filters=filters.Chat(config.dev_user_id)),
     MessageHandler(filters.Chat(config.group_id) &
                    filters.COMMAND &
                    ~filters.REPLY, command.command_in_group_without_reply),
@@ -53,7 +55,9 @@ handlers = [
         message.send_to_group
     ),
     MessageHandler(
-        filters.ChatType.GROUPS & (
+        (filters.ChatType.GROUPS |
+         filters.ChatType.CHANNEL) &
+         (
             filters.StatusUpdate.PINNED_MESSAGE |
             filters.StatusUpdate.LEFT_CHAT_MEMBER |
             # filters.StatusUpdate.NEW_CHAT_MEMBERS |
@@ -66,7 +70,8 @@ handlers = [
                 r'^随机波动StochasticVolatility$')
         ), message.handle_legacy),
     MessageHandler(
-        filters.Chat(config.question_group_id),
+        filters.Chat(config.question_group_id) &
+        ~filters.UpdateType.EDITED,
         message.count_questions
     ),
     PollAnswerHandler(poll.handle_poll_answer),

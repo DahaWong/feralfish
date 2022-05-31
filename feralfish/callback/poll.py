@@ -1,9 +1,11 @@
+from telegram import Update
+from telegram.ext import CallbackContext
 from config import group_id
 import random
 moods = [10, 7.5, 5, 2.5, 0]
 
 
-async def handle_poll_answer(update, context):
+async def handle_poll_answer(update: Update, context: CallbackContext):
     weather = ['🌪', random.choice(['⛈️', '❄️', '🌨']), '🌧', '☔️', '☂️', '🌦',
                '☁️',  '⛅️', '🌤', random.choice(['🏝', '🏞️', '🏖', '🌅', '💫', '☀️']), '🏝']
     if context.bot_data.get('poll_id') != update.poll_answer.poll_id:

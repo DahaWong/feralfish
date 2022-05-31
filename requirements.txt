@@ -1,2 +1,3 @@
-python-telegram-bot==13.6
-mutagen
+python-telegram-bot==20.0a0
+notion_client
+python-dateutil

@@ -1,9 +1,10 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from config import group_id, channel_id, question_channel_name, manifest
+from telegram.ext import CallbackContext
+from config import group_id, channel_id, question_channel_name, manifest, dev_user_id
 import random
 
 
-async def send_poll(context):
+async def send_poll(context:CallbackContext):
     msg = context.bot_data.get('msg')
     if msg:
         await msg.unpin()
@@ -33,7 +34,7 @@ async def send_poll(context):
         {'score': 0, 'count': 0, 'msg': msg, 'poll_id': msg.poll.id})
 
 
-async def send_analysis(context):
+async def send_analysis(context:CallbackContext):
     questions_count = context.bot_data.get('questions_count', 0)
     feedback_count = context.bot_data.get('questions_feedback_count', 0)
     if feedback_count:
@@ -46,6 +47,8 @@ async def send_analysis(context):
             f"晚上好，我们本周共发出 {questions_count} 个灵感买家的问题，不过还没收到大家的反馈。\n\n"
             "这一周你都在思考些什么呢？欢迎填表分享你的问题，帮助更新我们的灵感买家问题库。"
         )
+    
+    # Send to ideabuyersclub
     await context.bot.send_message(
         chat_id=f"@{channel_id}",
         text=text,
@@ -56,7 +59,9 @@ async def send_analysis(context):
             )
         )
     )
-    await context.bot.send_message(
+    
+    # Send to qna25 channel
+    msg = await context.bot.send_message(
         chat_id=f"@{question_channel_name}",
         text=text,
         reply_markup=InlineKeyboardMarkup.from_button(
@@ -66,5 +71,24 @@ async def send_analysis(context):
             )
         )
     )
+    await msg.pin()
     context.bot_data.pop('questions_feedback_count')
     context.bot_data.pop('questions_count')
+
+
+async def send_recent_analysis(context:CallbackContext):
+    questions = context.bot_data.get('recent_questions')
+    feedback_count = context.bot_data.get('recent_feedbacks')
+    content = ''
+    for question in questions:
+        content += f"{question['content']}\nhttps://t.me/qna25/{question['message_id']}\n\n"
+    text = (
+        f"各位晚上好，今天我们发出了 3 条来自灵感买家的问题，并收到 {feedback_count} 条反馈，点击链接看看大家是如何回答的吧！\n\n"
+        f"{content}"
+    )
+    await context.bot.send_message(
+        chat_id=f"@{channel_id}",
+        text=text,
+    )
+    context.bot_data['recent_questions'] = []
+    context.bot_data['recent_feedbacks'] = 0
